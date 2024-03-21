@@ -36,7 +36,7 @@ namespace ClickHouseConnector
         {
             _connectionPool = new Queue<ClickHouseConnection>(_poolSize);
 
-            for (int i = 0; i < _poolSize; i++)
+            for (var i = 0; i < _poolSize; i++)
             {
                 var connection = CreateNewConnection();
                 _connectionPool.Enqueue(connection);

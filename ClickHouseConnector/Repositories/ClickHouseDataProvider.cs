@@ -19,7 +19,7 @@ namespace ClickHouseConnector.Repositories
         public async Task<DataTable> FetchDataAsync(string queryString, 
             IEnumerable<QueryParameter> parameters = null)
         {
-            DataTable dt = new DataTable();
+            var dt = new DataTable();
 
             using (var command = new ClickHouseCommand(_connection))
             {
@@ -45,10 +45,10 @@ namespace ClickHouseConnector.Repositories
                         if (reader.HasRows)
                         {
                             // Add columns to DataTable based on schema information
-                            for (int i = 0; i < reader.FieldCount; i++)
+                            for (var i = 0; i < reader.FieldCount; i++)
                             {
-                                string columnName = reader.GetName(i);
-                                Type dataType = reader.GetFieldType(i);
+                                var columnName = reader.GetName(i);
+                                var dataType = reader.GetFieldType(i);
 
                                 // Add column to DataTable with the same name and data type
                                 dt.Columns.Add(columnName, dataType);
@@ -57,9 +57,9 @@ namespace ClickHouseConnector.Repositories
                             // Read data from reader and populate DataTable
                             while (await reader.ReadAsync())
                             {
-                                DataRow row = dt.NewRow();
+                                var row = dt.NewRow();
 
-                                for (int i = 0; i < reader.FieldCount; i++)
+                                for (var i = 0; i < reader.FieldCount; i++)
                                 {
                                     // Populate each column in the DataRow
                                     row[i] = reader.GetValue(i);
