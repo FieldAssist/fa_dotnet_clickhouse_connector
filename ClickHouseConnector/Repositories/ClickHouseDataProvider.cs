@@ -1,9 +1,9 @@
-﻿using ClickHouse.Client.ADO;
-using ClickHouse.Client.Utility;
+﻿// Copyright (c) FieldAssist. All Rights Reserved.
+
+using System.Data;
+using ClickHouse.Client.ADO;
 using ClickHouseConnector.Interfaces;
 using ClickHouseConnector.Models;
-using System.ComponentModel.Design;
-using System.Data;
 
 namespace ClickHouseConnector.Repositories
 {
@@ -16,7 +16,7 @@ namespace ClickHouseConnector.Repositories
             _connection = connection;
         }
 
-        public async Task<DataTable> FetchDataAsync(string queryString, 
+        public async Task<DataTable> FetchDataAsync(string queryString,
             IEnumerable<QueryParameter> parameters = null)
         {
             var dt = new DataTable();
@@ -69,16 +69,17 @@ namespace ClickHouseConnector.Repositories
                                 dt.Rows.Add(row);
                             }
                         }
-                    }   
+                    }
                 }
                 catch (Exception ex)
                 {
                     throw;
                 }
                 finally
-                {                    
+                {
                     command.Parameters.Clear();
                 }
+
                 return dt;
             }
         }

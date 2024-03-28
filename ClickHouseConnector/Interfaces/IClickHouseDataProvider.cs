@@ -1,10 +1,7 @@
-﻿using ClickHouseConnector.Models;
-using System;
-using System.Collections.Generic;
+﻿// Copyright (c) FieldAssist. All Rights Reserved.
+
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using ClickHouseConnector.Models;
 
 namespace ClickHouseConnector.Interfaces
 {
