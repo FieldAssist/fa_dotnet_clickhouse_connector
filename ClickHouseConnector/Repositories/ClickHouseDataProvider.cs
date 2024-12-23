@@ -1,9 +1,10 @@
-﻿using ClickHouse.Client.ADO;
-using ClickHouse.Client.Utility;
+﻿// Copyright (c) FieldAssist. All Rights Reserved.
+
+using System.Data;
+using System.Data.SqlClient;
+using ClickHouse.Client.ADO;
 using ClickHouseConnector.Interfaces;
 using ClickHouseConnector.Models;
-using System.ComponentModel.Design;
-using System.Data;
 
 namespace ClickHouseConnector.Repositories
 {
@@ -16,7 +17,7 @@ namespace ClickHouseConnector.Repositories
             _connection = connection;
         }
 
-        public async Task<DataTable> FetchDataAsync(string queryString, 
+        public async Task<DataTable> FetchDataAsync(string queryString,
             IEnumerable<QueryParameter> parameters = null)
         {
             var dt = new DataTable();
@@ -69,17 +70,63 @@ namespace ClickHouseConnector.Repositories
                                 dt.Rows.Add(row);
                             }
                         }
-                    }   
+                    }
                 }
                 catch (Exception ex)
                 {
                     throw;
                 }
                 finally
-                {                    
+                {
                     command.Parameters.Clear();
                 }
+
                 return dt;
+            }
+        }
+
+        public async Task<string> GetSingleResultOfQuery(string queryString, List<SqlParameter> parameters = null,
+            int? commandTimeout = null)
+        {
+            using (var command = new ClickHouseCommand(_connection))
+            {
+                string result = null;
+                try
+                {
+                    command.CommandTimeout = 900;
+                    command.CommandText = queryString;
+                    if (parameters != null)
+                    {
+                        foreach (var parameter in parameters)
+                        {
+                            var param = command.CreateParameter();
+                            param.ParameterName = parameter.ParameterName;
+                            param.Value = parameter.Value;
+                            //param.DbType = parameter.DataType;
+                            command.Parameters.Add(param);
+                        }
+                    }
+
+                    using (var reader = await command.ExecuteReaderAsync())
+                    {
+                        if (reader.HasRows)
+                        {
+                            reader.Read();
+                            result = reader[0].ToString();
+                        }
+
+                        return result;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    await Console.Error.WriteLineAsync(ex.ToString());
+                    return "No Data";
+                }
+                finally
+                {
+                    command.Parameters.Clear();
+                }
             }
         }
     }
