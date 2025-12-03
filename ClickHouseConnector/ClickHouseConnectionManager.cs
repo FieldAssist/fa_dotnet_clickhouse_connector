@@ -1,4 +1,6 @@
-﻿using ClickHouse.Client.ADO;
+﻿// Copyright (c) FieldAssist. All Rights Reserved.
+
+using ClickHouse.Client.ADO;
 
 namespace ClickHouseConnector
 {
@@ -90,6 +92,7 @@ namespace ClickHouseConnector
                 {
                     connection.Dispose();
                 }
+
                 _connectionPool.Clear();
             }
         }
