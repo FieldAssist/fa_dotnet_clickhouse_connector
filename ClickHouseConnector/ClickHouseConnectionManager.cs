@@ -9,7 +9,9 @@ namespace ClickHouseConnector
         void ReleaseConnection(ClickHouseConnection connection);
 
     }
+#pragma warning disable IDISP025 // Class with no virtual dispose method should be sealed - TODO: Review this
     public class ClickHouseConnectionManager : IClickHouseConnectionManager, IDisposable
+#pragma warning restore IDISP025 // Class with no virtual dispose method should be sealed
     {
         private static readonly object _lock = new object();
         private static Queue<ClickHouseConnection> _connectionPool;
@@ -66,7 +68,9 @@ namespace ClickHouseConnector
                 }
                 else
                 {
+#pragma warning disable IDISP007 // Don't dispose injected
                     connection.Dispose();
+#pragma warning restore IDISP007 // Don't dispose injected
                 }
             }
         }

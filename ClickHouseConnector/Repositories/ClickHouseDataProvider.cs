@@ -51,7 +51,9 @@ namespace ClickHouseConnector.Repositories
                                 var dataType = reader.GetFieldType(i);
 
                                 // Add column to DataTable with the same name and data type
+#pragma warning disable IDISP004 // Don't ignore created IDisposable - Object owner will dispose it.
                                 dt.Columns.Add(columnName, dataType);
+#pragma warning restore IDISP004 // Don't ignore created IDisposable
                             }
 
                             // Read data from reader and populate DataTable
