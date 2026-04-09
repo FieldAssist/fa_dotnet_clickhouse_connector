@@ -684,3 +684,13 @@ FodyWeavers.xsd
 
 ### VisualStudio Patch ###
 # Additional files built by Visual Studio
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# Vs Code C# Dev Kit
+*.lscache
