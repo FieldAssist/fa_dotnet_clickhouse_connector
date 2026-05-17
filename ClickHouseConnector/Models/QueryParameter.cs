@@ -1,4 +1,6 @@
-﻿using System.Data;
+﻿// Copyright (c) FieldAssist. All Rights Reserved.
+
+using System.Data;
 
 namespace ClickHouseConnector.Models
 {
